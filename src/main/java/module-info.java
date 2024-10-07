@@ -13,4 +13,5 @@ module com.example.teleaccesspro {
 
     opens com.example.teleaccesspro to javafx.fxml;
     exports com.example.teleaccesspro;
+    exports com.example.teleaccesspro.client;
 }
