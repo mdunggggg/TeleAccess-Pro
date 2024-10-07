@@ -12,6 +12,7 @@ module com.example.teleaccesspro {
     requires com.almasb.fxgl.all;
     requires java.desktop;
     requires jbcrypt;
+    requires javafx.swing;
 
     opens com.example.teleaccesspro to javafx.fxml;
     exports com.example.teleaccesspro;

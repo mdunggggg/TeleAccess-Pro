@@ -24,8 +24,8 @@ public class ClientUI extends Application {
     }
 
     // Phương thức chuyển sang clientSceneEnterPassWordServer
-    public void showScene2(String serverIP) {
-        clientSceneEnterPassWordServer.setServerIP(serverIP);
+    public void showScene2(String serverIP, int port) {
+        clientSceneEnterPassWordServer.setServerIP(serverIP, port);
         primaryStage.setScene(clientSceneEnterPassWordServer.getScene());
     }
 

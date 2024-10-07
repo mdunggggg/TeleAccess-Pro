@@ -7,12 +7,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ClientScene_EnterPasswordServer {
     private Scene scene;
     private ClientUI clientUI;
     private String serverIP;
+    private int port;
+    private ClientConnection clientConnection;
+    private ImageView imageView;
 
     public ClientScene_EnterPasswordServer(ClientUI clientUI) {
         this.clientUI = clientUI;
@@ -20,8 +27,9 @@ public class ClientScene_EnterPasswordServer {
     }
 
     // Đặt địa chỉ IP từ scene1
-    public void setServerIP(String serverIP) {
+    public void setServerIP(String serverIP, int port) {
         this.serverIP = serverIP;
+        this.port = port;
     }
 
     private void createScene() {
@@ -36,6 +44,12 @@ public class ClientScene_EnterPasswordServer {
                 // Lấy giá trị người dùng nhập vào
                 System.out.println("Địa chỉ IP Server: " + serverIP);
                 System.out.println("Mật khẩu: " + password);
+                // Kết nối đến server
+                try {
+                    connectToServer(serverIP, port, password);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Lỗi Nhập Liệu");
@@ -52,6 +66,17 @@ public class ClientScene_EnterPasswordServer {
 
         scene = new Scene(layout, 400, 200);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+    }
+
+    private void connectToServer(String serverIP, int port, String password) throws IOException {
+        clientConnection = new ClientConnection(serverIP, port);
+        if(clientConnection.connectToServer(password)) {
+            imageView = new ImageView();
+            InputStream inputStream = clientConnection.getSocket().getInputStream();
+            ClientScreenHandler clientScreenHandler = new ClientScreenHandler(inputStream, imageView);
+            clientScreenHandler.start();
+        }
+
     }
 
     public Scene getScene() {

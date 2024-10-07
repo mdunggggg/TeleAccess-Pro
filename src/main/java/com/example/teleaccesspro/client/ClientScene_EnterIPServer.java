@@ -27,7 +27,7 @@ public class ClientScene_EnterIPServer {
         okButton.setOnAction(e -> {
             String serverIP = ipInput.getText().trim();
             if (!serverIP.isEmpty()) {
-                clientUI.showScene2(serverIP);
+                clientUI.showScene2(serverIP, 1004);
             } else {
                 // Hiển thị thông báo lỗi hoặc yêu cầu nhập lại
                 Alert alert = new Alert(Alert.AlertType.ERROR);

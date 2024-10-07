@@ -33,7 +33,8 @@ public class ServerConnection {
                 DataInputStream dis = new DataInputStream(new FileInputStream("src/main/java/com/example/teleaccesspro/server/password.txt"));
                 String password = dis.readUTF().trim();
                 System.out.println("Awaiting connection from client");
-                new ServerConnectionHandler(socket, password).start();
+                new ServerConnectionHandler(socket, password, width, height).authenticate();
+                new ServerScreenHandler(socket.getOutputStream(), robot, rectangle).start();
             }
 
         }
