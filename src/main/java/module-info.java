@@ -10,8 +10,11 @@ module com.example.teleaccesspro {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.desktop;
+    requires jbcrypt;
 
     opens com.example.teleaccesspro to javafx.fxml;
     exports com.example.teleaccesspro;
     exports com.example.teleaccesspro.client;
+    exports com.example.teleaccesspro.server;
 }
