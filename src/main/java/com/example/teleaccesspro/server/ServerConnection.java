@@ -1,6 +1,8 @@
 package com.example.teleaccesspro.server;
 
 
+import com.example.teleaccesspro.server.event.EventHandler;
+
 import java.awt.*;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -26,7 +28,7 @@ public class ServerConnection {
             String height = "" + dim.getHeight();
             Rectangle rectangle = new Rectangle(dim);
             Robot robot = new Robot(gDev);
-
+            (new Thread(new EventHandler(robot))).start();
             while (true) {
                 System.out.println("Awaiting connection from client");
                 Socket socket = serverSocket.accept();
@@ -34,7 +36,9 @@ public class ServerConnection {
                 String password = dis.readUTF().trim();
                 System.out.println("Awaiting connection from client");
                 new ServerConnectionHandler(socket, password, width, height).authenticate();
+
                 new ServerScreenHandler(socket.getOutputStream(), robot, rectangle).start();
+
             }
 
         }
