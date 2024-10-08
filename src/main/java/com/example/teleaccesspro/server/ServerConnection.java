@@ -28,7 +28,7 @@ public class ServerConnection {
             String height = "" + dim.getHeight();
             Rectangle rectangle = new Rectangle(dim);
             Robot robot = new Robot(gDev);
-            (new Thread(new EventHandler(robot))).start();
+            (new Thread(new EventHandler(robot, width, height))).start();
             while (true) {
                 System.out.println("Awaiting connection from client");
                 Socket socket = serverSocket.accept();

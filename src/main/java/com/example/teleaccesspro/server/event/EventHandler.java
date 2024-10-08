@@ -13,9 +13,14 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class EventHandler extends UnicastRemoteObject implements IDeviceEvent, Runnable {
     private Robot robot;
+    private double width;
+    private double height;
 
-    public EventHandler( Robot robot) throws RemoteException{
+    public EventHandler( Robot robot, String width, String height) throws RemoteException{
         this.robot = robot;
+        this.width = Double.parseDouble(width.trim());
+        this.height = Double.parseDouble(height.trim());
+        System.out.println("Width: " + this.width + ", Height: " + this.height);
     }
 
     @Override
@@ -26,7 +31,7 @@ public class EventHandler extends UnicastRemoteObject implements IDeviceEvent, R
             throw new RuntimeException(e);
         }
         try {
-            Naming.bind("rmi://localhost/event", this);
+            Naming.bind("rmi://192.168.1.12/event", this);
             System.out.println("RMI server is runing on port 1099");
         }
         catch (MalformedURLException | AlreadyBoundException | RemoteException e) {
@@ -56,7 +61,9 @@ public class EventHandler extends UnicastRemoteObject implements IDeviceEvent, R
 
     @Override
     public void mouseMoved(double x, double y) {
-       // robot.mouseMove((int)x, (int)y);
-        System.out.println("Mouse moved to x: " + x + " y: " + y);
+        int xPosition = (int) (x * width);
+        int yPosition = (int) (y * height);
+        robot.mouseMove(xPosition, yPosition);
+        System.out.println("Mouse moved to: " + xPosition + ", " + yPosition);
     }
 }
