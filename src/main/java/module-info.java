@@ -13,9 +13,13 @@ module com.example.teleaccesspro {
     requires java.desktop;
     requires jbcrypt;
     requires javafx.swing;
+    requires java.rmi;
 
     opens com.example.teleaccesspro to javafx.fxml;
     exports com.example.teleaccesspro;
     exports com.example.teleaccesspro.client;
     exports com.example.teleaccesspro.server;
+    exports com.example.teleaccesspro.server.event;
+    exports com.example.teleaccesspro.client.event;
+    exports com.example.teleaccesspro.event;
 }

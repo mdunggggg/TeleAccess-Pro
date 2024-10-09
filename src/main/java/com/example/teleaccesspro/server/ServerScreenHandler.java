@@ -24,7 +24,6 @@ public class ServerScreenHandler extends Thread{
         super.run();
         while (true) {
             BufferedImage image = robot.createScreenCapture(rectangle);
-            System.out.println("Sending screen to client " + image);
             try {
                 ImageIO.write(image, "jpeg", oos);
 

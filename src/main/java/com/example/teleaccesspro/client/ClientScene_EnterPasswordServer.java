@@ -1,5 +1,6 @@
 package com.example.teleaccesspro.client;
 
+import com.example.teleaccesspro.client.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -75,6 +76,7 @@ public class ClientScene_EnterPasswordServer {
             InputStream inputStream = clientConnection.getSocket().getInputStream();
             ClientScreenHandler clientScreenHandler = new ClientScreenHandler(inputStream, imageView);
             clientScreenHandler.start();
+            new EventHandler(clientConnection.getSocket(), imageView, 500, 500);
         }
 
     }
