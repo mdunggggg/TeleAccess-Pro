@@ -16,10 +16,14 @@ import java.io.InputStream;
 public class ClientScreenHandler extends Thread {
     private InputStream is;
     private ImageView imageView;
+    private Double width;
+    private Double height;
 
-    public ClientScreenHandler(InputStream is, ImageView imageView) {
+    public ClientScreenHandler(InputStream is, ImageView imageView, Double width, Double height) {
         this.is = is;
         this.imageView = imageView;
+        this.width = width;
+        this.height = height;
         Platform.runLater(this::openImageScreen);
     }
 
@@ -50,7 +54,7 @@ public class ClientScreenHandler extends Thread {
         imageStage.setTitle("Image Screen");
 
         StackPane root = new StackPane(imageView);
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, width, height);
 
         imageStage.setScene(scene);
         imageStage.show();

@@ -11,6 +11,9 @@ public class ClientConnection {
     private DataInputStream dis;
     private DataOutputStream dos;
     private Socket socket;
+    private String width;
+    private String height;
+
 
     public ClientConnection(String host, int port) throws IOException {
         this.host = host;
@@ -26,6 +29,10 @@ public class ClientConnection {
         String response = dis.readUTF();
         if (response.equals("success")) {
             System.out.println("Connected to server successfully!");
+            String width = dis.readUTF();
+            String height = dis.readUTF();
+            this.width = width;
+            this.height = height;
             return true;
         } else {
             System.out.println("Failed to connect to server!");
@@ -71,5 +78,21 @@ public class ClientConnection {
 
     public void setSocket(Socket socket) {
         this.socket = socket;
+    }
+
+    public String getWidth() {
+        return width;
+    }
+
+    public void setWidth(String width) {
+        this.width = width;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
     }
 }
