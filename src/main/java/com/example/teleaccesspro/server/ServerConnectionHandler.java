@@ -30,6 +30,12 @@ public class ServerConnectionHandler{
             if(BCrypt.checkpw(password, passwordServer)) {
                 System.out.println("Correct password");
                 dos.writeUTF("success");
+                dos.flush();
+                // Send screen width and height
+                dos.writeUTF(width);
+                dos.flush();
+                dos.writeUTF(height);
+                dos.flush();
 
             } else {
                 System.out.println("Incorrect password");
