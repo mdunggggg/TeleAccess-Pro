@@ -5,6 +5,7 @@ import com.example.teleaccesspro.event.IDeviceEvent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.awt.event.InputEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
@@ -35,7 +36,7 @@ public class EventHandler {
 
     private void setUpRmi(){
         try{
-            deviceEvent = (IDeviceEvent)Naming.lookup("rmi://localhost/event");
+            deviceEvent = (IDeviceEvent)Naming.lookup("rmi://192.168.1.12/event");
         }
         catch (NotBoundException e) {
             System.err.println("RMI client is not running");
@@ -49,19 +50,23 @@ public class EventHandler {
     }
 
     private void setEventHandlers() {
-//        pane.setOnMousePressed(event -> {
-//            printWriter.println("PRESS_MOUSE");
-//            printWriter.println(event.getSceneX() / width);
-//            printWriter.println(event.getSceneY() / height);
-//            printWriter.flush();
-//        });
-//
-//        pane.setOnMouseReleased(event -> {
-//            printWriter.println("RELEASE_MOUSE");
-//            printWriter.println(event.getSceneX() / width);
-//            printWriter.println(event.getSceneY() / height);
-//            printWriter.flush();
-//        });
+        pane.setOnMousePressed(event -> {
+            System.out.println("Mouse pressed");
+            try {
+                deviceEvent.mousePressed(InputEvent.BUTTON1_DOWN_MASK);
+            } catch (RemoteException e) {
+                System.err.println("Remote exception in mousePressed");
+            }
+        });
+
+        pane.setOnMouseReleased(event -> {
+            try {
+                deviceEvent.mouseReleased(InputEvent.BUTTON1_DOWN_MASK);
+            } catch (RemoteException e) {
+                System.err.println("Remote exception in mouseReleased");
+            }
+        });
+
 
         pane.setOnMouseMoved(event -> {
             try {

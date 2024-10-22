@@ -41,11 +41,15 @@ public class EventHandler extends UnicastRemoteObject implements IDeviceEvent, R
 
     @Override
     public void mousePressed(int button) {
+        System.out.println("Mouse pressed");
+        System.out.println("Button: " + button);
         robot.mousePress(button);
     }
 
     @Override
     public void mouseReleased(int button) {
+        System.out.println("Mouse released");
+        System.out.println("Button: " + button);
         robot.mouseRelease(button);
     }
 
