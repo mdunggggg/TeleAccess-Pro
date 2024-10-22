@@ -35,7 +35,7 @@ public class EventHandler {
 
     private void setUpRmi(){
         try{
-            deviceEvent = (IDeviceEvent)Naming.lookup("rmi://localhost/event");
+            deviceEvent = (IDeviceEvent)Naming.lookup("rmi://192.168.1.2/event");
         }
         catch (NotBoundException e) {
             System.err.println("RMI client is not running");
