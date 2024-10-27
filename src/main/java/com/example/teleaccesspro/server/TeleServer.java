@@ -27,7 +27,6 @@ public class TeleServer {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 
     public void stopServer() {
