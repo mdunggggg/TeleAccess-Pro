@@ -24,7 +24,7 @@ public class ClientScreenHandler extends Thread {
         this.imageView = imageView;
         this.width = width;
         this.height = height;
-        Platform.runLater(this::openImageScreen);
+        //Platform.runLater(this::openImageScreen);
     }
 
     @Override
