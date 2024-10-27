@@ -24,7 +24,7 @@ public class ServerConnectionHandler{
         this.height = height;
     }
 
-    void authenticate() {
+    Boolean authenticate() {
         try {
             String password = dis.readUTF().trim();
             if(BCrypt.checkpw(password, passwordServer)) {
@@ -36,14 +36,18 @@ public class ServerConnectionHandler{
                 dos.flush();
                 dos.writeUTF(height);
                 dos.flush();
+                return true;
 
             } else {
                 System.out.println("Incorrect password");
                 dos.writeUTF("fail");
+                dos.flush();
+                return false;
             }
         }
         catch (Exception e) {
-
+            System.out.println("Error: " + e);
+            return false;
         }
     }
 }

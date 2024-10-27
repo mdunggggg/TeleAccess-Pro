@@ -31,7 +31,7 @@ public class EventHandler extends UnicastRemoteObject implements IDeviceEvent, R
             throw new RuntimeException(e);
         }
         try {
-            Naming.bind("rmi://192.168.1.12/event", this);
+            Naming.bind("rmi://192.168.1.13/event", this);
             System.out.println("RMI server is runing on port 1099");
         }
         catch (MalformedURLException | AlreadyBoundException | RemoteException e) {
@@ -71,3 +71,4 @@ public class EventHandler extends UnicastRemoteObject implements IDeviceEvent, R
         System.out.println("Mouse moved to: " + xPosition + ", " + yPosition);
     }
 }
+
