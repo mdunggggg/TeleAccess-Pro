@@ -24,7 +24,7 @@ public class ClientScreenHandler extends Thread {
         this.imageView = imageView;
         this.width = width;
         this.height = height;
-        Platform.runLater(this::openImageScreen);
+        //Platform.runLater(this::openImageScreen);
     }
 
     @Override
@@ -39,10 +39,10 @@ public class ClientScreenHandler extends Thread {
                 ByteArrayInputStream bais = new ByteArrayInputStream(bufferImage, 0, count);
                 BufferedImage bufferedImage = ImageIO.read(bais);
 
-//                if (bufferedImage != null) {
-//                    Image fxImage = SwingFXUtils.toFXImage(bufferedImage, null);
-//                    Platform.runLater(() -> imageView.setImage(fxImage)); // Update UI on JavaFX thread
-//                }
+                if (bufferedImage != null) {
+                    Image fxImage = SwingFXUtils.toFXImage(bufferedImage, null);
+                    Platform.runLater(() -> imageView.setImage(fxImage)); // Update UI on JavaFX thread
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();

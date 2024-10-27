@@ -72,12 +72,14 @@ public class ClientScene_EnterPasswordServer {
     private void connectToServer(String serverIP, int port, String password) throws IOException {
         clientConnection = new ClientConnection(serverIP, port);
         if(clientConnection.connectToServer(password)) {
-            System.out.println("Width: " + clientConnection.getWidth() + ", Height: " + clientConnection.getHeight());
-            imageView = new ImageView();
-            InputStream inputStream = clientConnection.getSocket().getInputStream();
-            ClientScreenHandler clientScreenHandler = new ClientScreenHandler(inputStream, imageView, Double.parseDouble(clientConnection.getWidth()), Double.parseDouble(clientConnection.getHeight()));
-            clientScreenHandler.start();
-            new EventHandler(clientConnection.getSocket(), imageView, Double.parseDouble(clientConnection.getHeight()), Double.parseDouble(clientConnection.getWidth()));
+            clientUI.showServerScreen(clientConnection);
+//            System.out.println("Width: " + clientConnection.getWidth() + ", Height: " + clientConnection.getHeight());
+//            imageView = new ImageView();
+//            InputStream inputStream = clientConnection.getSocket().getInputStream();
+//            ClientScreenHandler clientScreenHandler = new ClientScreenHandler(inputStream, imageView, Double.parseDouble(clientConnection.getWidth()), Double.parseDouble(clientConnection.getHeight()));
+//            clientScreenHandler.start();
+//            new EventHandler(imageView, Double.parseDouble(clientConnection.getHeight()), Double.parseDouble(clientConnection.getWidth()));
+
         }
 
     }
