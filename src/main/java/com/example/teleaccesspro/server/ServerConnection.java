@@ -2,6 +2,7 @@ package com.example.teleaccesspro.server;
 
 
 import com.example.teleaccesspro.server.event.EventHandler;
+import com.example.teleaccesspro.server.file.ServerFileConnection;
 
 import java.awt.*;
 import java.io.DataInputStream;
@@ -35,11 +36,13 @@ public class ServerConnection {
                 DataInputStream dis = new DataInputStream(new FileInputStream("src/main/java/com/example/teleaccesspro/server/password.txt"));
                 String password = dis.readUTF().trim();
                 System.out.println("Awaiting connection from client");
-                new ServerConnectionHandler(socket, password, width, height).authenticate();
-
+                Boolean authenticatedn = new ServerConnectionHandler(socket, password, width, height).authenticate();
                 new ServerScreenHandler(socket.getOutputStream(), robot, rectangle).start();
+                if(authenticatedn) {
+                    ServerFileConnection serverFileConnection = new ServerFileConnection(2507);
+                }
 
-            }
+             }
 
         }
         catch (Exception e) {
