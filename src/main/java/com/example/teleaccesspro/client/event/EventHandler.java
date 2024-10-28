@@ -48,7 +48,7 @@ public class EventHandler {
 
     private void setEventHandlers(Pane pane) {
         imageView.setOnMousePressed(event -> {
-            System.out.println("Mouse pressed");
+            System.out.println("Mouse pressed from imageView");
             try {
                 deviceEvent.mousePressed(InputEvent.BUTTON1_DOWN_MASK);
             } catch (RemoteException e) {
@@ -74,7 +74,7 @@ public class EventHandler {
         });
 
         pane.setOnKeyPressed(event -> {
-            System.out.println("Key pressed");
+            System.out.println("Key pressed from pane");
             System.out.println(event.getCode());
             try {
                 deviceEvent.keyPressed(event.getCode().getCode());
@@ -84,13 +84,17 @@ public class EventHandler {
         });
 
         pane.setOnKeyReleased(event -> {
-            System.out.println("Key released");
+            System.out.println("Key released from pane");
             System.out.println(event.getCode());
             try {
                 deviceEvent.keyReleased(event.getCode().getCode());
             } catch (RemoteException e) {
                 System.out.println("Remote exception in keyReleased");
             }
+        });
+
+        pane.setOnMouseClicked(event -> {
+            pane.requestFocus();
         });
 
         pane.setFocusTraversable(true);
