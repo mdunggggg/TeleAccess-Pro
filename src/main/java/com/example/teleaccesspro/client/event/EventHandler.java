@@ -1,5 +1,6 @@
 package com.example.teleaccesspro.client.event;
 
+import com.example.teleaccesspro.config.ConnectionKeys;
 import com.example.teleaccesspro.event.DeviceEvent;
 import com.example.teleaccesspro.event.IDeviceEvent;
 import javafx.scene.image.ImageView;
@@ -32,7 +33,7 @@ public class EventHandler {
 
     private void setUpRmi(){
         try{
-            deviceEvent = (IDeviceEvent)Naming.lookup("rmi://192.168.1.13/event");
+            deviceEvent = (IDeviceEvent)Naming.lookup(ConnectionKeys.RMI_EVENT_SERVER);
         }
         catch (NotBoundException e) {
             System.err.println("RMI client is not running");

@@ -1,5 +1,7 @@
 package com.example.teleaccesspro.server.file;
 
+import com.example.teleaccesspro.config.ConnectionKeys;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -9,7 +11,7 @@ public class ReceiveFileHandler extends Thread {
 
     public ReceiveFileHandler( InputStream inputStream) {
         this.inputStream = inputStream;
-        this.saveDirectory = "D:\\test_ltm";
+        this.saveDirectory = ConnectionKeys.SAVED_DIR;
     }
 
     @Override

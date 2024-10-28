@@ -3,6 +3,7 @@ package com.example.teleaccesspro.client;
 import com.example.teleaccesspro.client.event.EventHandler;
 import com.example.teleaccesspro.client.file.ClientFileConnection;
 import com.example.teleaccesspro.client.file.SendFileHandler;
+import com.example.teleaccesspro.config.ConnectionKeys;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -84,22 +85,10 @@ public class ClientUI extends Application {
             Dragboard db = event.getDragboard();
             boolean success = false;
             if (db.hasFiles()) {
-                ClientFileConnection clientFileConnection = null;
-                try {
-                    clientFileConnection = new ClientFileConnection(serverIP, 2507);
-                } catch (IOException e) {
-                    System.out.println("Error connecting to file server: " + e.getMessage());
-                }
-                Socket socket = clientFileConnection.getFileSocket();
-                try {
-                    sendFileHandler = new SendFileHandler(socket.getOutputStream());
-                } catch (IOException e) {
-                    System.out.println("Error creating SendFileHandler: " + e.getMessage());
-                }
                 List<File> files = db.getFiles();
                 File draggedFile = files.getFirst();
                 System.out.println("Dragged file: " + draggedFile.getAbsolutePath());
-                sendFileHandler.sendFile(draggedFile);
+                sendFile(draggedFile);
                 success = true;
             }
             event.setDropCompleted(success);
@@ -123,6 +112,7 @@ public class ClientUI extends Application {
             File selectedFile = fileChooser.showOpenDialog(fileChooserStage);
             if (selectedFile != null) {
                 System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                sendFile(selectedFile);
             }
         });
 
@@ -132,6 +122,22 @@ public class ClientUI extends Application {
 
         fileChooserStage.setScene(scene);
         fileChooserStage.show();
+    }
+
+    void sendFile(File file) {
+        ClientFileConnection clientFileConnection = null;
+        try {
+            clientFileConnection = new ClientFileConnection(serverIP, ConnectionKeys.FILE_SERVER_PORT);
+        } catch (IOException e) {
+            System.out.println("Error connecting to file server: " + e.getMessage());
+        }
+        Socket socket = clientFileConnection.getFileSocket();
+        try {
+            sendFileHandler = new SendFileHandler(socket.getOutputStream());
+        } catch (IOException e) {
+            System.out.println("Error creating SendFileHandler: " + e.getMessage());
+        }
+        sendFileHandler.sendFile(file);
     }
 
 

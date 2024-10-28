@@ -1,5 +1,6 @@
 package com.example.teleaccesspro.client;
 
+import com.example.teleaccesspro.config.ConnectionKeys;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,7 +28,7 @@ public class ClientScene_EnterIPServer {
         okButton.setOnAction(e -> {
             String serverIP = ipInput.getText().trim();
             if (!serverIP.isEmpty()) {
-                clientUI.showScene2(serverIP, 1004);
+                clientUI.showScene2(serverIP, ConnectionKeys.SERVER_IMAGE_PORT);
             } else {
                 // Hiển thị thông báo lỗi hoặc yêu cầu nhập lại
                 Alert alert = new Alert(Alert.AlertType.ERROR);

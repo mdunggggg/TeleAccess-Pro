@@ -1,5 +1,6 @@
 package com.example.teleaccesspro.server;
 
+import com.example.teleaccesspro.config.ConnectionKeys;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -46,7 +47,7 @@ public class ServerUI extends Application {
                 savePassword(password);
                 showToast(toastLabel, "Password saved successfully!", primaryStage);
                 Thread serverThread = new Thread(() -> {
-                    new ServerConnection(1004);
+                    new ServerConnection(ConnectionKeys.SERVER_IMAGE_PORT);
                 });
                 serverThread.setDaemon(true);
                 serverThread.start();
@@ -74,7 +75,7 @@ public class ServerUI extends Application {
     }
 
     private void savePassword(String password) throws IOException {
-        DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream("src/main/java/com/example/teleaccesspro/server/password.txt"));
+        DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(ConnectionKeys.PASSWORD_FILE));
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
         dataOutputStream.writeUTF(hashed);
         System.out.println("Password saved to file: " + password);
