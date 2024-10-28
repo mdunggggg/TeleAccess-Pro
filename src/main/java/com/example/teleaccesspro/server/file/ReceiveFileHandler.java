@@ -67,9 +67,9 @@ public class ReceiveFileHandler extends Thread {
              FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             byte[] buffer = new byte[4096];
             int bytesRead;
-//            while ((bytesRead = gzipInputStream.read(buffer)) != -1) {
-//                fileOutputStream.write(buffer, 0, bytesRead);
-//            }
+            while ((bytesRead = gzipInputStream.read(buffer)) != -1) {
+                fileOutputStream.write(buffer, 0, bytesRead);
+            }
             System.out.println("Compressed file received and decompressed.");
         }
     }
