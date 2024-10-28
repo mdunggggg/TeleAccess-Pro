@@ -133,11 +133,11 @@ public class ClientUI extends Application {
         }
         Socket socket = clientFileConnection.getFileSocket();
         try {
-            sendFileHandler = new SendFileHandler(socket.getOutputStream());
+            sendFileHandler = new SendFileHandler(socket.getOutputStream(), file);
         } catch (IOException e) {
             System.out.println("Error creating SendFileHandler: " + e.getMessage());
         }
-        sendFileHandler.sendFile(file);
+        sendFileHandler.start();
     }
 
 
