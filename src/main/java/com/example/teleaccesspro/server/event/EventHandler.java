@@ -36,6 +36,7 @@ public class EventHandler extends UnicastRemoteObject implements IDeviceEvent, R
             System.out.println("RMI server is runing on port " + ConnectionKeys.RMI_PORT);
         }
         catch (MalformedURLException | AlreadyBoundException | RemoteException e) {
+            System.out.println(e);
             System.err.println("RMI server is not running");
         }
     }

@@ -4,11 +4,12 @@ import com.example.teleaccesspro.config.ConnectionKeys;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.zip.GZIPInputStream;
 
 public class ReceiveFileHandler extends Thread {
     private final InputStream inputStream;
     private final String saveDirectory; // Thư mục lưu file
-
+    private static final long CHUNK_THRESHOLD = 100 * 1024 * 1024; // 100MB
     public ReceiveFileHandler( InputStream inputStream) {
         this.inputStream = inputStream;
         this.saveDirectory = ConnectionKeys.SAVED_DIR;
@@ -26,38 +27,52 @@ public class ReceiveFileHandler extends Thread {
     }
 
     private void receiveFile() throws IOException {
-        StringBuilder fileNameBuilder = new StringBuilder();
-        int charRead;
 
-        // Đọc tên file cho đến khi gặp dòng mới
-        while ((charRead = inputStream.read()) != -1) {
-            if (charRead == '\n') {
-                break; // Kết thúc tên file
-            }
-            fileNameBuilder.append((char) charRead);
+        String fileName = readLine(inputStream);
+        // Đọc kích thước file
+        long fileSize = Long.parseLong(readLine(inputStream));
+
+        // Xác định file lưu
+        File file = new File(saveDirectory, fileName);
+        file.getParentFile().mkdirs();
+
+        // Kiểm tra và xử lý theo kích thước file
+        if (fileSize > CHUNK_THRESHOLD) {
+            receiveFileInChunks(file, fileSize);
+        } else {
+            receiveCompressedFile(file);
         }
 
-        String fileName = fileNameBuilder.toString();
-        long fileSize = Long.parseLong(readLine(inputStream)); // Đọc kích thước file từ luồng
+        System.out.println("File received and saved at: " + file.getAbsolutePath());
+    }
 
-        // Tạo đường dẫn hoàn chỉnh cho file lưu
-        File file = new File(saveDirectory, fileName); // Sử dụng thư mục saveDirectory
-        file.getParentFile().mkdirs(); // Tạo thư mục nếu chưa tồn tại
+    private void receiveFileInChunks(File file, long fileSize) throws IOException {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            byte[] buffer = new byte[4096]; // Bộ đệm để đọc dữ liệu
+            byte[] buffer = new byte[4096];
             int bytesRead;
             long totalBytesRead = 0;
 
-            // Đọc dữ liệu từ socket và ghi vào file
+            // Đọc và ghi từng chunk vào file
             while (totalBytesRead < fileSize && (bytesRead = inputStream.read(buffer)) != -1) {
                 fileOutputStream.write(buffer, 0, bytesRead);
                 totalBytesRead += bytesRead;
             }
-
-            System.out.println("File received and saved at: " + file.getAbsolutePath());
+            System.out.println("Chunked file received.");
         }
     }
 
+    // Đọc file khi file nén (file <= 100MB)
+    private void receiveCompressedFile(File file) throws IOException {
+        try (GZIPInputStream gzipInputStream = new GZIPInputStream(inputStream);
+             FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = gzipInputStream.read(buffer)) != -1) {
+                fileOutputStream.write(buffer, 0, bytesRead);
+            }
+            System.out.println("Compressed file received and decompressed.");
+        }
+    }
     // Phương thức hỗ trợ để đọc một dòng từ InputStream
     private String readLine(InputStream inputStream) throws IOException {
         StringBuilder line = new StringBuilder();
