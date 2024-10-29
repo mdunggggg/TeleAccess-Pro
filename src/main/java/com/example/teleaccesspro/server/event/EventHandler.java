@@ -1,5 +1,6 @@
 package com.example.teleaccesspro.server.event;
 
+import com.example.teleaccesspro.config.ConnectionKeys;
 import com.example.teleaccesspro.event.IDeviceEvent;
 
 import java.awt.*;
@@ -26,15 +27,16 @@ public class EventHandler extends UnicastRemoteObject implements IDeviceEvent, R
     @Override
     public void run() {
         try {
-            LocateRegistry.createRegistry(1099);
+            LocateRegistry.createRegistry(ConnectionKeys.RMI_PORT);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
         try {
-            Naming.bind("rmi://192.168.1.12/event", this);
-            System.out.println("RMI server is runing on port 1099");
+            Naming.bind(ConnectionKeys.RMI_EVENT_SERVER, this);
+            System.out.println("RMI server is runing on port " + ConnectionKeys.RMI_PORT);
         }
         catch (MalformedURLException | AlreadyBoundException | RemoteException e) {
+            System.out.println(e);
             System.err.println("RMI server is not running");
         }
     }

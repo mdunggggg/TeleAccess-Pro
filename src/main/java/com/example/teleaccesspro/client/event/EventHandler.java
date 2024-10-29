@@ -1,5 +1,6 @@
 package com.example.teleaccesspro.client.event;
 
+import com.example.teleaccesspro.config.ConnectionKeys;
 import com.example.teleaccesspro.event.DeviceEvent;
 import com.example.teleaccesspro.event.IDeviceEvent;
 import javafx.scene.image.ImageView;
@@ -32,7 +33,7 @@ public class EventHandler {
 
     private void setUpRmi(){
         try{
-            deviceEvent = (IDeviceEvent)Naming.lookup("rmi://192.168.1.13/event");
+            deviceEvent = (IDeviceEvent)Naming.lookup(ConnectionKeys.RMI_EVENT_SERVER);
         }
         catch (NotBoundException e) {
             System.err.println("RMI client is not running");
@@ -47,7 +48,7 @@ public class EventHandler {
 
     private void setEventHandlers(Pane pane) {
         imageView.setOnMousePressed(event -> {
-            System.out.println("Mouse pressed");
+            System.out.println("Mouse pressed from imageView");
             try {
                 deviceEvent.mousePressed(InputEvent.BUTTON1_DOWN_MASK);
             } catch (RemoteException e) {
@@ -73,7 +74,7 @@ public class EventHandler {
         });
 
         pane.setOnKeyPressed(event -> {
-            System.out.println("Key pressed");
+            System.out.println("Key pressed from pane");
             System.out.println(event.getCode());
             try {
                 deviceEvent.keyPressed(event.getCode().getCode());
@@ -83,13 +84,17 @@ public class EventHandler {
         });
 
         pane.setOnKeyReleased(event -> {
-            System.out.println("Key released");
+            System.out.println("Key released from pane");
             System.out.println(event.getCode());
             try {
                 deviceEvent.keyReleased(event.getCode().getCode());
             } catch (RemoteException e) {
                 System.out.println("Remote exception in keyReleased");
             }
+        });
+
+        pane.setOnMouseClicked(event -> {
+            pane.requestFocus();
         });
 
         pane.setFocusTraversable(true);
