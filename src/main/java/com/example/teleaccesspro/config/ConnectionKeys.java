@@ -8,4 +8,7 @@ public class ConnectionKeys {
     public static int RMI_PORT = 1099;
     public static int FILE_SERVER_PORT = 2507;
     public static int SERVER_IMAGE_PORT = 1004;
+
+    public static long CHUNK_THRESHOLD = 1024 * 1024 * 100;
+    public static final int CHUNK_SIZE = 10 * 1024 * 1024;
 }
