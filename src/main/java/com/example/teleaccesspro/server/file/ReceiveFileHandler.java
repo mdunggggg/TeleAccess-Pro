@@ -4,12 +4,17 @@ import com.example.teleaccesspro.config.ConnectionKeys;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.zip.GZIPInputStream;
+
 
 public class ReceiveFileHandler extends Thread {
     private final InputStream inputStream;
     private final String saveDirectory; // Thư mục lưu file
-    private static final long CHUNK_THRESHOLD = 100 * 1024 * 1024; // 100MB
+
     public ReceiveFileHandler( InputStream inputStream) {
         this.inputStream = inputStream;
         this.saveDirectory = ConnectionKeys.SAVED_DIR;
@@ -29,15 +34,12 @@ public class ReceiveFileHandler extends Thread {
     private void receiveFile() throws IOException {
 
         String fileName = readLine(inputStream);
-        // Đọc kích thước file
         long fileSize = Long.parseLong(readLine(inputStream));
 
-        // Xác định file lưu
         File file = new File(saveDirectory, fileName);
         file.getParentFile().mkdirs();
 
-        // Kiểm tra và xử lý theo kích thước file
-        if (fileSize > CHUNK_THRESHOLD) {
+        if (fileSize > ConnectionKeys.CHUNK_THRESHOLD) {
             receiveFileInChunks(file, fileSize);
         } else {
             receiveCompressedFile(file);

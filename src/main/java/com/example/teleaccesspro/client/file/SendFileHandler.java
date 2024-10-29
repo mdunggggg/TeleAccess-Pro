@@ -1,12 +1,17 @@
 package com.example.teleaccesspro.client.file;
 
+import com.example.teleaccesspro.config.ConnectionKeys;
+
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPOutputStream;
 
 public class SendFileHandler extends Thread {
     private OutputStream os;
-    private static final long CHUNK_THRESHOLD = 100 * 1024 * 1024; // 100MB
-    private static final int CHUNK_SIZE = 10 * 1024 * 1024; // 10MB
     private File file;
 
     public SendFileHandler(OutputStream os, File file) {
@@ -26,8 +31,9 @@ public class SendFileHandler extends Thread {
             long fileSize = file.length();
             os.write((file.getName() + "\n").getBytes());
             os.write((fileSize + "\n").getBytes());
+            os.flush();
 
-            if (fileSize > CHUNK_THRESHOLD) {
+            if (fileSize > ConnectionKeys.CHUNK_THRESHOLD) {
                 System.out.println("File size is greater than 100MB, sending in chunks");
                 sendFileInChunks(file);
             } else {
@@ -50,6 +56,7 @@ public class SendFileHandler extends Thread {
             int bytesRead;
             while ((bytesRead = fileInputStream.read(buffer)) != -1) {
                 gzipOutputStream.write(buffer, 0, bytesRead);
+                System.out.println("Compressed " + bytesRead + " bytes.");
             }
             gzipOutputStream.finish();
             os.flush();
@@ -63,10 +70,10 @@ public class SendFileHandler extends Thread {
 
     private void sendFileInChunks(File file) throws IOException {
         long fileSize = file.length();
-        int totalChunks = (int) Math.ceil((double) fileSize / CHUNK_SIZE);
+        int totalChunks = (int) Math.ceil((double) fileSize / ConnectionKeys.CHUNK_SIZE);
 
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
-            byte[] buffer = new byte[CHUNK_SIZE];
+            byte[] buffer = new byte[ConnectionKeys.CHUNK_SIZE];
             int bytesRead;
 
             for (int chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
