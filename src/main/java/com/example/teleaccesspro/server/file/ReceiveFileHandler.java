@@ -3,11 +3,6 @@ package com.example.teleaccesspro.server.file;
 import com.example.teleaccesspro.config.ConnectionKeys;
 
 import java.io.*;
-import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.zip.GZIPInputStream;
 
 
@@ -50,7 +45,7 @@ public class ReceiveFileHandler extends Thread {
 
     private void receiveFileInChunks(File file, long fileSize) throws IOException {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            byte[] buffer = new byte[4096];
+            byte[] buffer = new byte[ConnectionKeys.DEFAULT_BUFFER_SIZE];
             int bytesRead;
             long totalBytesRead = 0;
 
@@ -67,7 +62,7 @@ public class ReceiveFileHandler extends Thread {
     private void receiveCompressedFile(File file) throws IOException {
         try (GZIPInputStream gzipInputStream = new GZIPInputStream(inputStream);
              FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            byte[] buffer = new byte[4096];
+            byte[] buffer = new byte[ConnectionKeys.CHUNK_SIZE];
             int bytesRead;
             while ((bytesRead = gzipInputStream.read(buffer)) != -1) {
                 fileOutputStream.write(buffer, 0, bytesRead);

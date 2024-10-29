@@ -11,4 +11,5 @@ public class ConnectionKeys {
 
     public static final long CHUNK_THRESHOLD = 100 * 1024 * 1024; // 100MB
     public static final int CHUNK_SIZE = 10 * 1024 * 1024; // 10MB
+    public static final int DEFAULT_BUFFER_SIZE = 1024 * 1024; // 1MB
 }
