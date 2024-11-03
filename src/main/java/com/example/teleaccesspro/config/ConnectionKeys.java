@@ -12,4 +12,9 @@ public class ConnectionKeys {
     public static final long CHUNK_THRESHOLD = 100 * 1024 * 1024; // 100MB
     public static final int CHUNK_SIZE = 10 * 1024 * 1024; // 10MB
     public static final int DEFAULT_BUFFER_SIZE = 1024 * 1024; // 1MB
+
+    public  static final int PORT_SEND_CLIENT_SERVER = 50005;
+    public  static final int PORT_SEND_SERVER_CLIENT = 50006;
+    public  static final int PORT_RECEIVE_CLIENT_SERVER = 50006;
+    public  static final int PORT_RECEIVE_SERVER_CLIENT = 50005;
 }
