@@ -14,6 +14,7 @@ public class ConnectionKeys {
     public static final int DEFAULT_BUFFER_SIZE = 1024 * 1024; // 1MB
     public static final int BUFFER_SIZE = 1024;
 
+    public static final String CLIENT_IP = "192.168.1.10";
     public  static final int PORT_SEND_CLIENT_SERVER = 50005;
     public  static final int PORT_SEND_SERVER_CLIENT = 50006;
     public  static final int PORT_RECEIVE_CLIENT_SERVER = 50006;
