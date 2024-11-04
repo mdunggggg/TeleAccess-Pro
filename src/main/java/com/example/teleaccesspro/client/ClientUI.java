@@ -54,7 +54,7 @@ public class ClientUI extends Application {
     }
 
     public void showServerScreen(ClientConnection clientConnection) throws IOException {
-        showFileChooserStage();
+       // showFileChooserStage();
         ImageView imageView = new ImageView();
         imageView.setFitWidth(Double.parseDouble(clientConnection.getWidth()));
         imageView.setFitHeight(Double.parseDouble(clientConnection.getHeight()));

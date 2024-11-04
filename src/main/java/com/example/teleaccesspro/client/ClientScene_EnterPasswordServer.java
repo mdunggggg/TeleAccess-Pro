@@ -1,7 +1,6 @@
 package com.example.teleaccesspro.client;
 
-import com.example.teleaccesspro.client.event.EventHandler;
-import com.example.teleaccesspro.client.file.ClientFileConnection;
+import com.example.teleaccesspro.voice_server.VoiceChatClient;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public class ClientScene_EnterPasswordServer {
     private Scene scene;
@@ -72,15 +70,11 @@ public class ClientScene_EnterPasswordServer {
 
     private void connectToServer(String serverIP, int port, String password) throws IOException {
         clientConnection = new ClientConnection(serverIP, port);
-        if(clientConnection.connectToServer(password)) {
-           clientUI.showServerScreen(clientConnection);
-//            System.out.println("Width: " + clientConnection.getWidth() + ", Height: " + clientConnection.getHeight());
-//            imageView = new ImageView();
-//            InputStream inputStream = clientConnection.getSocket().getInputStream();
-//            ClientScreenHandler clientScreenHandler = new ClientScreenHandler(inputStream, imageView, Double.parseDouble(clientConnection.getWidth()), Double.parseDouble(clientConnection.getHeight()));
-//            clientScreenHandler.start();
-//            new EventHandler(imageView, Double.parseDouble(clientConnection.getHeight()), Double.parseDouble(clientConnection.getWidth()));
+        if (clientConnection.connectToServer(password)) {
+            clientUI.showServerScreen(clientConnection);
             clientUI.setUpDragAndDrop();
+            VoiceChatClient voiceChatClient = new VoiceChatClient(serverIP, 50005);
+            voiceChatClient.start();
         }
 
     }
