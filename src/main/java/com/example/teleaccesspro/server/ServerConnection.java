@@ -4,6 +4,7 @@ package com.example.teleaccesspro.server;
 import com.example.teleaccesspro.config.ConnectionKeys;
 import com.example.teleaccesspro.server.event.EventHandler;
 import com.example.teleaccesspro.server.file.ServerFileConnection;
+import com.example.teleaccesspro.voice_server.VoiceChatServer;
 
 import java.awt.*;
 import java.io.DataInputStream;
@@ -39,6 +40,9 @@ public class ServerConnection {
                 new ServerScreenHandler(socket.getOutputStream(), robot, rectangle).start();
                 if(authenticatedn) {
                     ServerFileConnection serverFileConnection = new ServerFileConnection(ConnectionKeys.FILE_SERVER_PORT);
+                    serverFileConnection.start();
+                    VoiceChatServer voiceChatServer = new VoiceChatServer(ConnectionKeys.CLIENT_IP, 50005);
+                    voiceChatServer.start();
                 }
 
              }

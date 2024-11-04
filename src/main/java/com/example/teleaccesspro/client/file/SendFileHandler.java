@@ -52,7 +52,7 @@ public class SendFileHandler extends Thread {
     private void sendCompressedFile(File file) {
         try (FileInputStream fileInputStream = new FileInputStream(file);
              GZIPOutputStream gzipOutputStream = new GZIPOutputStream(os)) {
-            byte[] buffer = new byte[4096];
+            byte[] buffer = new byte[ConnectionKeys.DEFAULT_BUFFER_SIZE];
             int bytesRead;
             while ((bytesRead = fileInputStream.read(buffer)) != -1) {
                 gzipOutputStream.write(buffer, 0, bytesRead);
