@@ -9,4 +9,6 @@ public interface IDeviceEvent extends Remote {
     public void keyPressed(int keyCode) throws RemoteException;
     public void keyReleased(int keyCode) throws RemoteException;
     public void mouseMoved(double x, double y) throws RemoteException;
+    public void mouseDragged(double x, double y) throws RemoteException;
+    public void mouseScrolled(int scrollAmount) throws RemoteException;
 }

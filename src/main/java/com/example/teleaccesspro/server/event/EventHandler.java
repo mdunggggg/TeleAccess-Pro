@@ -72,4 +72,17 @@ public class EventHandler extends UnicastRemoteObject implements IDeviceEvent, R
         robot.mouseMove(xPosition, yPosition);
         System.out.println("Mouse moved to: " + xPosition + ", " + yPosition);
     }
+
+    @Override
+    public void mouseDragged(double x, double y) throws RemoteException {
+        int xPosition = (int) (x * width);
+        int yPosition = (int) (y * height);
+        robot.mouseMove(xPosition, yPosition);
+        System.out.println("Mouse dragged to: " + xPosition + ", " + yPosition);
+    }
+
+    @Override
+    public void mouseScrolled(int scrollAmount) throws RemoteException {
+        robot.mouseWheel(scrollAmount);
+    }
 }
