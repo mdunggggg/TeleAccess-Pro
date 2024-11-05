@@ -1,17 +1,13 @@
 package com.example.teleaccesspro.client.event;
 
 import com.example.teleaccesspro.config.ConnectionKeys;
-import com.example.teleaccesspro.event.DeviceEvent;
 import com.example.teleaccesspro.event.IDeviceEvent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.awt.event.InputEvent;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.MalformedURLException;
-import java.net.Socket;
-import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -72,6 +68,23 @@ public class EventHandler {
                System.err.println("Remote exception in mouseMoved");
             }
         });
+
+        imageView.setOnScroll(event -> {
+            try {
+                deviceEvent.mouseScrolled((int) event.getDeltaY());
+            } catch (RemoteException e) {
+                System.err.println("Remote exception in mouseScrolled");
+            }
+        });
+
+        imageView.setOnMouseDragged(event -> {
+            try {
+                deviceEvent.mouseDragged((event.getSceneX() / width), ((event.getSceneY() / height)));
+            } catch (RemoteException e) {
+                System.err.println("Remote exception in mouseDragged");
+            }
+        });
+
 
         pane.setOnKeyPressed(event -> {
             System.out.println("Key pressed from pane");
