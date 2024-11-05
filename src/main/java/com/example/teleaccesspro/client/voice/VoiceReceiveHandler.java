@@ -45,22 +45,18 @@ public class VoiceReceiveHandler extends Thread {
     }
 
     private void handleAudioData() throws IOException {
-        try (
-                OutputStream outputStream = clientSocket.getOutputStream();
-                InputStream inputStream = clientSocket.getInputStream();
-        ) {
-            byte[] outputBuffer = new byte[1024];
-            byte[] inputBuffer = new byte[1024];
-            int bytesReadFromMic = 0, bytesReadFromStream = 0;
-            while ((bytesReadFromStream = inputStream.read(inputBuffer)) > 0 ||
-                    (bytesReadFromMic = microphone.read(outputBuffer, 0, outputBuffer.length)) > 0) {
-                if (bytesReadFromMic > 0) {
-                    outputStream.write(outputBuffer, 0, bytesReadFromMic);
-                }
-                if (bytesReadFromStream > 0) {
-                    speaker.write(inputBuffer, 0, bytesReadFromStream);
-                }
-            }
+
+        byte[] bufferForInput = new byte[1024];
+        int bufferVariableForInput = 0;
+        OutputStream out = clientSocket.getOutputStream();
+        InputStream in = clientSocket.getInputStream();
+
+        byte[] bufferForOutput = new byte[1024];
+        int bufferVariableForOutput = 0;
+        while (((bufferVariableForOutput = microphone.read(bufferForOutput, 0, 1024)) > 0) || (bufferVariableForInput = in.read(bufferForInput)) > 0) {
+            out.write(bufferForOutput, 0, bufferVariableForOutput);
+            speaker.write(bufferForInput, 0, bufferVariableForInput);
+            System.out.println(bufferVariableForInput);
         }
     }
 

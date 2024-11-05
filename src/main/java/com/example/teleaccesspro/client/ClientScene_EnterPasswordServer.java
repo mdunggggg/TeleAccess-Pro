@@ -1,6 +1,6 @@
 package com.example.teleaccesspro.client;
 
-import com.example.teleaccesspro.voice_server.VoiceChatClient;
+import com.example.teleaccesspro.client.voice.VoiceChatClient;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
