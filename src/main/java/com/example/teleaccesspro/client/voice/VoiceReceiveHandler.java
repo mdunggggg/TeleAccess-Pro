@@ -53,10 +53,10 @@ public class VoiceReceiveHandler extends Thread {
 
         byte[] bufferForOutput = new byte[1024];
         int bufferVariableForOutput = 0;
-        while (((bufferVariableForOutput = microphone.read(bufferForOutput, 0, 1024)) > 0) || (bufferVariableForInput = in.read(bufferForInput)) > 0) {
+        while ((bufferVariableForInput = in.read(bufferForInput)) > 0 || (bufferVariableForOutput = microphone.read(bufferForOutput, 0, 1024)) > 0) {
             out.write(bufferForOutput, 0, bufferVariableForOutput);
             speaker.write(bufferForInput, 0, bufferVariableForInput);
-            System.out.println(bufferVariableForInput);
+
         }
     }
 
