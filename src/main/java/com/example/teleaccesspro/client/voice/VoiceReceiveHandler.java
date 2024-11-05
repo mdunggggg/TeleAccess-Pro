@@ -37,10 +37,10 @@ public class VoiceReceiveHandler extends Thread {
         speaker.open(format);
         speaker.start();
 
-        DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
-        microphone = (TargetDataLine) AudioSystem.getLine(info);
-        microphone.open(format);
-        microphone.start();
+//        DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
+//        microphone = (TargetDataLine) AudioSystem.getLine(info);
+//        microphone.open(format);
+//        microphone.start();
 
     }
 

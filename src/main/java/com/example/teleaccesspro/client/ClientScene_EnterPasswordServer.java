@@ -1,6 +1,7 @@
 package com.example.teleaccesspro.client;
 
 import com.example.teleaccesspro.client.voice.VoiceChatClient;
+import com.example.teleaccesspro.server.voice.VoiceChatServer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -75,6 +76,9 @@ public class ClientScene_EnterPasswordServer {
             clientUI.setUpDragAndDrop();
             VoiceChatClient voiceChatClient = new VoiceChatClient(serverIP, 50005);
             voiceChatClient.start();
+
+            VoiceChatServer voiceChatServer = new VoiceChatServer(serverIP, 50006);
+            voiceChatServer.start();
         }
 
     }
