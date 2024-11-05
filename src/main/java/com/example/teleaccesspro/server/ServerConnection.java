@@ -1,6 +1,7 @@
 package com.example.teleaccesspro.server;
 
 
+import com.example.teleaccesspro.client.voice.VoiceChatClient;
 import com.example.teleaccesspro.config.ConnectionKeys;
 import com.example.teleaccesspro.server.event.EventHandler;
 import com.example.teleaccesspro.server.file.ServerFileConnection;
@@ -43,6 +44,9 @@ public class ServerConnection {
                     serverFileConnection.start();
                     VoiceChatServer voiceChatServer = new VoiceChatServer(ConnectionKeys.CLIENT_IP, 50005);
                     voiceChatServer.start();
+
+                    VoiceChatClient voiceChatClient = new VoiceChatClient(ConnectionKeys.CLIENT_IP, 50006);
+                    voiceChatClient.start();
                 }
 
              }
