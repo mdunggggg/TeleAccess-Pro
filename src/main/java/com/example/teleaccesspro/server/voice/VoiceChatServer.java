@@ -1,4 +1,6 @@
-package com.example.teleaccesspro.voice_server;
+package com.example.teleaccesspro.server.voice;
+
+import com.example.teleaccesspro.server.voice.VoiceSendHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;

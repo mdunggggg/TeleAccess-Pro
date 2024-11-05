@@ -1,4 +1,4 @@
-package com.example.teleaccesspro.voice_server;
+package com.example.teleaccesspro.server.voice;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
@@ -48,30 +48,18 @@ public class VoiceSendHandler extends Thread {
     }
 
     private void handleAudioData() throws IOException {
-        byte[] inputBuffer = new byte[BUFFER_SIZE];
-        byte[] outputBuffer = new byte[BUFFER_SIZE];
-        int bytesReadFromMicrophone;
-        int bytesReadFromClient;
-
-        try (OutputStream clientOutput = clientSocket.getOutputStream();
-             InputStream clientInput = clientSocket.getInputStream()) {
-            do {
-                // Read from microphone and send to client
-                bytesReadFromMicrophone = microphone.read(outputBuffer, 0, BUFFER_SIZE);
-                if (bytesReadFromMicrophone > 0) {
-                    clientOutput.write(outputBuffer, 0, bytesReadFromMicrophone);
-                    System.out.println("Sent data to client: " + bytesReadFromMicrophone + " bytes");
-                }
-
-                // Read from client and play to speaker
-                bytesReadFromClient = clientInput.read(inputBuffer, 0, BUFFER_SIZE);
-                if (bytesReadFromClient > 0) {
-                    speaker.write(inputBuffer, 0, bytesReadFromClient);
-                    System.out.println("Received data from client: " + bytesReadFromClient + " bytes");
-                }
-
-                // Exit if no data in both directions
-            } while (bytesReadFromMicrophone != -1 || bytesReadFromClient != -1);
+        byte[] bufferForInput = new byte[1024];
+        int bufferVariableForInput = 0;
+        byte[] bufferForOutput = new byte[1024];
+        int bufferVariableForOutput = 0;
+        OutputStream out = null;
+        out = clientSocket.getOutputStream();
+        InputStream in = clientSocket.getInputStream();
+        while(((bufferVariableForOutput = microphone.read(bufferForOutput, 0, 1024)) > 0) || (bufferVariableForInput = in.read(bufferForInput)) > 0) {
+            out.write(bufferForOutput, 0, bufferVariableForOutput);
+            speaker.write(bufferForInput, 0, bufferVariableForInput);
+            System.out.println("Voice sent/recieved");
+            System.out.println(bufferForInput);
         }
     }
 

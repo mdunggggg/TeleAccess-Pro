@@ -4,7 +4,7 @@ package com.example.teleaccesspro.server;
 import com.example.teleaccesspro.config.ConnectionKeys;
 import com.example.teleaccesspro.server.event.EventHandler;
 import com.example.teleaccesspro.server.file.ServerFileConnection;
-import com.example.teleaccesspro.voice_server.VoiceChatServer;
+import com.example.teleaccesspro.server.voice.VoiceChatServer;
 
 import java.awt.*;
 import java.io.DataInputStream;
