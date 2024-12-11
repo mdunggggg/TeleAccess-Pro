@@ -39,6 +39,13 @@ Supports fast and efficient file sharing to enhance productivity during remote s
 - **jBCrypt**: Utilizes BCrypt for password hashing, ensuring secure authentication when connecting to the remote machine. This feature enhances system security by encrypting user passwords, preventing unauthorized access and safeguarding sensitive information during remote sessions.
 ## Requirements
 - JDK 21 or above
-
+## Installation:
+- git clone https://github.com/mdunggggg/TeleAccess-Pro.git
+## How to use
+- Open project
+- Run ServerUI file and enter password
+- Run ClientUI file and enter ip and password server
+- Config rmi server name in connection keys file
+- If connection is successfull then you will be able to use every functionality
 ## License
 This project is licensed under the MIT License - see the [LICENSE](/License) file for details.
