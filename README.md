@@ -38,9 +38,7 @@ Supports fast and efficient file sharing to enhance productivity during remote s
 - **JavaFx**: Provides a rich graphical user interface for the client application. It enhances the user experience by creating a visually appealing and interactive interface, making remote access, chat, and file transfer functionalities intuitive and user-friendly.
 - **jBCrypt**: Utilizes BCrypt for password hashing, ensuring secure authentication when connecting to the remote machine. This feature enhances system security by encrypting user passwords, preventing unauthorized access and safeguarding sensitive information during remote sessions.
 ## Requirements
-- JDK 1.5 (JRE 1.5) or above
-- A desktop environment : Windows, Unix/LINUX ... etc.
-- NetBeans 8.3 or above
+- JDK 21 or above
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](/License) file for details.
